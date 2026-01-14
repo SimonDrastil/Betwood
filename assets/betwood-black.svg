@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 140" role="img" aria-label="Betwood logo">
+  <rect width="520" height="140" rx="28" fill="#0B0F14"/>
+  <text x="40" y="92" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="72" font-weight="800" fill="#FFFFFF">Betwood</text>
+  <circle cx="420" cy="70" r="26" fill="#FFFFFF" opacity="0.12" />
+  <path d="M420 48c12 6 12 38 0 44" stroke="#FFFFFF" stroke-width="6" fill="none" />
+  <path d="M400 52c8 8 8 28 0 36" stroke="#FFFFFF" stroke-width="6" fill="none" />
+  <path d="M440 52c-8 8-8 28 0 36" stroke="#FFFFFF" stroke-width="6" fill="none" />
+</svg>

@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Betwood — Simulation Sportsbook</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app">
+      <header class="app-header" role="banner">
+        <div class="logo-group">
+          <img src="assets/betwood-primary.svg" alt="Betwood" class="logo" />
+          <span class="simulation-pill">Simulation • No real money • Educational</span>
+        </div>
+        <div class="header-actions">
+          <button class="ghost-button" id="odds-toggle" aria-live="polite">Odds: American</button>
+          <div class="balance-pill" aria-label="Wallet balance">
+            <span>Balance</span>
+            <strong id="balance">1,000 WC</strong>
+          </div>
+          <button class="profile-button" aria-label="Open profile">
+            <span class="avatar">BW</span>
+            <div>
+              <p class="profile-name">Jordan Blake</p>
+              <p class="profile-meta" id="gate-status">Gate: Unverified</p>
+            </div>
+          </button>
+        </div>
+      </header>
+
+      <main class="main-layout">
+        <nav class="side-nav" aria-label="Primary">
+          <button class="nav-item active" data-section="sports">Sports</button>
+          <button class="nav-item" data-section="games">Games</button>
+          <button class="nav-item" data-section="live">Live</button>
+          <button class="nav-item" data-section="mybets">My Bets</button>
+          <button class="nav-item" data-section="wallet">Wallet</button>
+          <button class="nav-item" data-section="leaderboard">Leaderboard</button>
+          <button class="nav-item" data-section="account">Account</button>
+          <div class="nav-footer">
+            <p>Admin Tools</p>
+            <button class="nav-item" data-section="admin">Admin Panel</button>
+          </div>
+        </nav>
+
+        <section class="content" aria-live="polite">
+          <div class="content-header">
+            <div>
+              <h1>Basketball Hub</h1>
+              <p class="muted">Browse games, build tickets, and track your WoodCredits in simulation mode.</p>
+            </div>
+            <div class="filters">
+              <input type="search" id="search" placeholder="Search team" aria-label="Search team" />
+              <select id="date-filter" aria-label="Filter by date">
+                <option value="today">Today</option>
+                <option value="upcoming">Upcoming</option>
+                <option value="completed">Completed</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="content-grid">
+            <section class="panel" id="game-list">
+              <div class="panel-header">
+                <h2>Featured Games</h2>
+                <div class="pill-group">
+                  <button class="pill active">Today</button>
+                  <button class="pill">Upcoming</button>
+                  <button class="pill">Completed</button>
+                </div>
+              </div>
+              <div class="game-cards" id="games"></div>
+            </section>
+
+            <section class="panel" id="market-detail">
+              <div class="panel-header">
+                <h2 id="market-title">Market Board</h2>
+                <span class="status-pill" id="market-status">UPCOMING</span>
+              </div>
+              <div class="market-tabs">
+                <button class="tab active" data-tab="markets">Markets</button>
+                <button class="tab" data-tab="sgp">SGP</button>
+                <button class="tab" data-tab="info">Game Info</button>
+                <button class="tab" data-tab="stats">Stats</button>
+              </div>
+              <div class="market-table" id="market-table"></div>
+            </section>
+
+            <section class="panel hidden" id="mybets">
+              <div class="panel-header">
+                <h2>My Bets</h2>
+                <div class="pill-group">
+                  <button class="pill active">Open</button>
+                  <button class="pill">Settled</button>
+                  <button class="pill">Voided</button>
+                </div>
+              </div>
+              <div class="bet-cards" id="bet-cards"></div>
+            </section>
+
+            <section class="panel hidden" id="wallet">
+              <div class="panel-header">
+                <h2>Wallet</h2>
+                <span class="status-pill neutral">No cash value</span>
+              </div>
+              <div class="wallet-summary">
+                <div>
+                  <h3>Available Balance</h3>
+                  <p class="balance-large">1,000 WC</p>
+                </div>
+                <div>
+                  <h3>Daily Wager Limit</h3>
+                  <p>1,000 WC</p>
+                </div>
+                <div>
+                  <h3>Max Stake</h3>
+                  <p>200 WC</p>
+                </div>
+              </div>
+              <table class="ledger" aria-label="Wallet ledger">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Amount</th>
+                    <th>Details</th>
+                    <th>Time</th>
+                  </tr>
+                </thead>
+                <tbody id="ledger"></tbody>
+              </table>
+            </section>
+
+            <section class="panel hidden" id="leaderboard">
+              <div class="panel-header">
+                <h2>Leaderboard</h2>
+                <div class="pill-group">
+                  <button class="pill active">7d</button>
+                  <button class="pill">30d</button>
+                  <button class="pill">All</button>
+                </div>
+              </div>
+              <div class="leaderboard" id="leaderboard-list"></div>
+            </section>
+
+            <section class="panel hidden" id="account">
+              <div class="panel-header">
+                <h2>Account</h2>
+                <span class="status-pill neutral">School mode enabled</span>
+              </div>
+              <div class="account-grid">
+                <div>
+                  <h3>Profile</h3>
+                  <p>Display Name: Jordan Blake</p>
+                  <p>Email: jordan@betwood.demo</p>
+                </div>
+                <div>
+                  <h3>Preferences</h3>
+                  <ul>
+                    <li>Odds Format: <span id="odds-format">American</span></li>
+                    <li>Theme: Dark Navy</li>
+                    <li>School Mode Banner: On</li>
+                  </ul>
+                </div>
+                <div>
+                  <h3>Limits</h3>
+                  <ul>
+                    <li>Max stake: 200 WC</li>
+                    <li>Cooldown: 10s</li>
+                  </ul>
+                </div>
+              </div>
+            </section>
+
+            <section class="panel hidden" id="admin">
+              <div class="panel-header">
+                <h2>Admin Panel</h2>
+                <span class="status-pill">Admin Only</span>
+              </div>
+              <div class="admin-grid">
+                <div class="admin-card">
+                  <h3>Games & Markets</h3>
+                  <p>Create teams, configure markets, lock lines, and enter final scores.</p>
+                  <div class="admin-table">
+                    <div class="admin-row">
+                      <span>Midtown Meteors vs Bay City Waves</span>
+                      <span class="admin-tag">OPEN</span>
+                      <button class="ghost-button">Lock</button>
+                    </div>
+                    <div class="admin-row">
+                      <span>Capital Comets vs Westside Wolves</span>
+                      <span class="admin-tag">LOCKED</span>
+                      <button class="ghost-button">Settle</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="admin-card">
+                  <h3>Promos & Credits</h3>
+                  <p>Grant WC, configure daily bonus rules, and audit all changes.</p>
+                  <button class="primary-button">Grant 50 WC</button>
+                  <div class="audit-log">
+                    <p><strong>Audit:</strong> Admin granted 50 WC to Jordan Blake.</p>
+                    <p><strong>Audit:</strong> Markets updated for Midtown Meteors game.</p>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+        </section>
+
+        <aside class="betslip" aria-label="Betslip">
+          <div class="betslip-header">
+            <h2>Betslip</h2>
+            <span class="status-pill neutral" id="betslip-count">0 selections</span>
+          </div>
+          <div id="betslip-list" class="betslip-list"></div>
+          <div class="betslip-summary">
+            <div class="toggle-row">
+              <span>Parlay Builder</span>
+              <label class="switch">
+                <input type="checkbox" id="parlay-toggle" />
+                <span class="slider"></span>
+              </label>
+            </div>
+            <div class="stake-row">
+              <label for="stake">Stake (WC)</label>
+              <div class="stake-input">
+                <button class="ghost-button" data-stake="-10">-10</button>
+                <input id="stake" type="number" min="1" value="20" />
+                <button class="ghost-button" data-stake="10">+10</button>
+              </div>
+            </div>
+            <div class="summary-row">
+              <span>Implied Probability</span>
+              <strong id="implied">0%</strong>
+            </div>
+            <div class="summary-row">
+              <span>Potential Return</span>
+              <strong id="return">0 WC</strong>
+            </div>
+            <button class="primary-button" id="place-bet">Place Bet</button>
+            <p class="muted small">Max stake 200 WC • Cooldown 10s</p>
+          </div>
+        </aside>
+      </main>
+
+      <footer class="app-footer">
+        <p>Simulation • No real money • Educational</p>
+        <p>Betwood uses WoodCredits (WC) only. WC cannot be purchased, withdrawn, or exchanged for cash.</p>
+      </footer>
+    </div>
+
+    <div class="modal" id="gate-modal" role="dialog" aria-modal="true" aria-labelledby="gate-title">
+      <div class="modal-content">
+        <img src="assets/betwood-black.svg" alt="Betwood" />
+        <h2 id="gate-title">Welcome to Betwood</h2>
+        <p class="muted">Choose your access path to continue. Your response is saved to your profile.</p>
+        <button class="primary-button" data-gate="18+">I am 18+</button>
+        <button class="ghost-button" data-gate="school">I am under 18 and using this as a school simulation with permission</button>
+      </div>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
